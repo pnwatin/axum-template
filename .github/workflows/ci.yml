@@ -18,7 +18,7 @@ env:
 
 jobs: 
   check: 
-    name: Check
+    name: Checks
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -42,4 +42,7 @@ jobs:
 
       - name: Clippy
         run: cargo clippy --all-targets --all-features --locked -- -D warnings
+
+      - name: Unit tests
+        run: cargo test --lib --bins --all-features --locked
 
