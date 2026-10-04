@@ -4,9 +4,7 @@ use utoipa::ToSchema;
 use utoipa_axum::router::OpenApiRouter;
 use utoipa_axum::routes;
 
-use crate::context::ServerContext;
-
-pub fn router() -> OpenApiRouter<ServerContext> {
+pub fn router() -> OpenApiRouter {
     OpenApiRouter::new().routes(routes!(health))
 }
 

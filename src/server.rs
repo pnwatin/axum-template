@@ -18,7 +18,16 @@ impl Server {
         let address = config.bind.address();
         let listener = TcpListener::bind(address).await?;
 
-        let cx = ServerContext::builder().config(Arc::new(config)).build();
+        let database = config.database.connect().await?;
+
+        if config.database.auto_migrate {
+            sqlx::migrate!("./migrations").run(&database).await?;
+        }
+
+        let cx = ServerContext::builder()
+            .config(Arc::new(config))
+            .database(database)
+            .build();
 
         let router = build_axum_router(cx.clone());
         let router = apply_middlewares(router, cx);
@@ -41,6 +50,10 @@ impl Server {
 pub enum ServerInitError {
     #[error("io error: {0}")]
     Io(#[from] std::io::Error),
+    #[error("sqlx error: {0}")]
+    Sqlx(#[from] sqlx::error::Error),
+    #[error("sqlx migration error: {0}")]
+    Migration(#[from] sqlx::migrate::MigrateError),
 }
 
 async fn shutdown_signal() {

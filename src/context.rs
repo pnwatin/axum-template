@@ -2,6 +2,7 @@ use std::{ops::Deref, sync::Arc};
 
 use axum::extract::{FromRequestParts, State};
 use bon::Builder;
+use sqlx::PgPool;
 
 use crate::config::shared::SharedConfig;
 
@@ -13,6 +14,7 @@ use crate::config::shared::SharedConfig;
 )]
 pub struct ServerContextInner {
     pub config: Arc<SharedConfig>,
+    pub database: PgPool,
 }
 
 #[derive(Clone, FromRequestParts)]

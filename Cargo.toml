@@ -30,8 +30,16 @@ serde = { version = "1.0.229", features = ["derive"] }
 serde-aux = { version = "4.7.0" }
 serde_json = "1.0.151"
 
+sqlx = { version = "0.9.0", features = [
+  "runtime-tokio",
+  "tls-rustls",
+  "postgres",
+  "migrate",
+] }
+
 tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 tracing = { version = "0.1.44" }
+tracing-log = { version = "0.2.0" }
 
 secrecy = { version = "0.10.3", features = ["serde"] }
 url = { version = "2.5.8", features = ["serde"] }
