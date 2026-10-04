@@ -42,3 +42,8 @@ anyhow = { version = "1.0.104" }
 bon = { version = "3.10.1" }
 figment = { version = "0.10.19", features = ["env", "yaml"] }
 dotenvy = { version = "0.15.7" }
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1
