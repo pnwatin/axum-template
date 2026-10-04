@@ -3,6 +3,8 @@ use serde::Deserialize;
 pub mod config;
 pub mod context;
 pub mod middleware;
+pub mod openapi;
+pub mod routes;
 pub mod server;
 pub mod tracing;
 

@@ -3,7 +3,10 @@ use std::{net::SocketAddr, sync::Arc};
 use axum::Router;
 use tokio::net::TcpListener;
 
-use crate::{config::shared::SharedConfig, context::ServerContext, middleware::apply_middlewares};
+use crate::{
+    config::shared::SharedConfig, context::ServerContext, middleware::apply_middlewares,
+    routes::build_axum_router,
+};
 
 pub struct Server {
     router: Router,
@@ -17,7 +20,7 @@ impl Server {
 
         let cx = ServerContext::builder().config(Arc::new(config)).build();
 
-        let router = Router::new().with_state(cx.clone());
+        let router = build_axum_router(cx.clone());
         let router = apply_middlewares(router, cx);
 
         Ok(Self { router, listener })
