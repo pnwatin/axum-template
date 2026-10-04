@@ -7,6 +7,8 @@ async fn main() -> anyhow::Result<()> {
     let config = SharedConfig::from_env()?;
     let server = Server::new(config).await?;
 
+    tracing::info!("server listening on {}", server.address()?);
+
     server.run().await?;
 
     Ok(())
